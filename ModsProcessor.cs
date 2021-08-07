@@ -81,21 +81,32 @@ namespace FS19ModsComparator
             if (sourceLines.Length > 0)
             {
                 ProgressForm progress = new ProgressForm(sourceLines.Length);
-                using (ZipArchive zipPackFile = new ZipArchive(File.Create(pathToPack), ZipArchiveMode.Create))
+                progress.Show();
+
+                string packPath = pathToPack + "\\ModsMissing_Pack_" + DateTime.Now.Date.ToString().Replace('.', '-').Split(' ')[0] + "_" + DateTime.Now.ToShortTimeString().Replace(':', '-');
+                Trace.WriteLine(packPath);
+                System.IO.Directory.CreateDirectory(packPath);
+                foreach (string line in sourceLines)
                 {
-                    progress.Show();
-                    foreach (string line in sourceLines)
+                    progress.setCurrentValue(progress.getCurrentValue() + 1);
+                    if (mods.ContainsKey(line))
                     {
-                        progress.setCurrentValue(progress.getCurrentValue() + 1);
-                        if (mods.ContainsKey(line))
-                        {
-                            string file = mods[line];
-                            progress.setCurrentLabel(progress.getCurrentValue() + "/" + sourceLines.Length + " - " + file);
-                            zipPackFile.CreateEntryFromFile(file, file.Split('\\').Last<string>());
-                        }
+                        string file = mods[line];
+                        progress.setCurrentLabel(progress.getCurrentValue() + "/" + sourceLines.Length + " - " + file);
+                        System.IO.File.Copy(file, packPath + "\\" + file.Split('\\').Last<string>());
                     }
-                    progress.Close();
                 }
+
+                ProcessStartInfo startInfo = new ProcessStartInfo
+                {
+                    Arguments = packPath,
+                    FileName = "explorer.exe"
+                };
+
+                Process.Start(startInfo);
+
+                progress.Close();
+
                 return true;
             }
 
