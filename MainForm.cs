@@ -112,7 +112,7 @@ namespace FS19ModsComparator
         {
             using (var dialog = new SaveFileDialog())
             {
-                dialog.InitialDirectory = System.Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+                dialog.RestoreDirectory = true;
                 dialog.FileName = "ModsList.txt";
                 dialog.Filter = "Text files (*.txt)|*.txt";
                 dialog.DefaultExt = "txt";
@@ -134,7 +134,7 @@ namespace FS19ModsComparator
             string modsListPath = "";
             using (var dialog = new OpenFileDialog())
             {
-                dialog.InitialDirectory = System.Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+                dialog.RestoreDirectory = true;
                 dialog.FileName = "ModsList.txt";
                 dialog.Filter = "Text files (*.txt)|*.txt";
                 dialog.DefaultExt = "txt";
@@ -149,7 +149,7 @@ namespace FS19ModsComparator
             string modsMissingListPath = "";
             using (var dialog = new SaveFileDialog())
             {
-                dialog.InitialDirectory = System.Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+                dialog.RestoreDirectory = true;
                 dialog.FileName = "ModsMissingList.txt";
                 dialog.Filter = "Text files (*.txt)|*.txt";
                 dialog.DefaultExt = "txt";
@@ -177,7 +177,7 @@ namespace FS19ModsComparator
             string modsMissingListPath = "";
             using (var dialog = new OpenFileDialog())
             {
-                dialog.InitialDirectory = System.Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+                dialog.RestoreDirectory = true;
                 dialog.FileName = "ModsList.txt";
                 dialog.Filter = "Text files (*.txt)|*.txt";
                 dialog.DefaultExt = "txt";
@@ -187,27 +187,27 @@ namespace FS19ModsComparator
                 {
                     modsMissingListPath = dialog.FileName;
                 }
+                else return;
             }
 
-            string zipToSaVe = "";
-            using (var dialog = new SaveFileDialog())
+            string pathToSave = "";
+            using (var dialog = new FolderBrowserDialog())
             {
-                dialog.InitialDirectory = System.Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-                dialog.FileName = "MissingMods_Pack.zip";
-                dialog.Filter = "Archive files (*.zip)|*.zip";
-                dialog.DefaultExt = "zip";
+                dialog.Description = "Select where to save mods pack. It will create a folder inside this location.";
+
                 DialogResult result = dialog.ShowDialog();
 
                 if (result == DialogResult.OK)
                 {
-                    zipToSaVe = dialog.FileName;
+                    pathToSave = dialog.SelectedPath;
                 }
+                else return;
             }
 
-            if (zipToSaVe != "" && modsMissingListPath != "")
+            if (pathToSave != "" && modsMissingListPath != "")
             {
 
-                if (!modsProcessor.Pack(modsMissingListPath, zipToSaVe))
+                if (!modsProcessor.Pack(modsMissingListPath, pathToSave))
                 {
                     MessageBox.Show("No mods missing");
                 }

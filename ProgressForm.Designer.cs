@@ -43,9 +43,9 @@ namespace FS19ModsComparator
             // lbl_current
             // 
             this.lbl_current.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.lbl_current.Location = new System.Drawing.Point(0, 44);
+            this.lbl_current.Location = new System.Drawing.Point(0, 40);
             this.lbl_current.Name = "lbl_current";
-            this.lbl_current.Size = new System.Drawing.Size(280, 13);
+            this.lbl_current.Size = new System.Drawing.Size(286, 13);
             this.lbl_current.TabIndex = 1;
             this.lbl_current.Text = "Starting ...";
             this.lbl_current.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -55,7 +55,7 @@ namespace FS19ModsComparator
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.ClientSize = new System.Drawing.Size(280, 57);
+            this.ClientSize = new System.Drawing.Size(286, 53);
             this.ControlBox = false;
             this.Controls.Add(this.lbl_current);
             this.Controls.Add(this.progressbar);
